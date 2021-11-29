@@ -1,0 +1,6 @@
+#!/bin/sh
+npx create-react-app $1
+cd $1/
+truffle init
+sed -i '1i const path = require("path");' truffle-config.js
+sed -i 's+module.exports = {+module.exports = {\n\tcontracts_build_directory: path.join(__dirname, "src/contracts"),+g' truffle-config.js
