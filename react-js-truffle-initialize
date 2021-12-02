@@ -17,5 +17,6 @@ git clone https://github.com/crenata/react-js-truffle-starter-kit.git
 cp -rf react-js-truffle-starter-kit/* .
 rm -rf react-js-truffle-starter-kit
 rm -rf src/logo.svg
+rm -rf .git
 sed -i '2i "homepage": "https://localhost",' package.json
 sed -i 's+"scripts": {+"scripts": {\n"analyze": "source-map-explorer \x27build/static/js/*.js\x27",\n"predeploy": "npm run build",\n"deploy": "gh-pages -d build",\n"truffle-build": "truffle compile",\n"truffle-test": "truffle test",+g' package.json
