@@ -1,6 +1,21 @@
 #!/bin/sh
+if ! [ -x "$(command -v node)" ]; then
+	apt update
+	apt install nodejs
+fi
+if ! [ -x "$(command -v truffle)" ]; then
+	npm i -g truffle
+fi
+if ! [ -x "$(command -v git)" ]; then
+	apt install git
+fi
 npx create-react-app $1
 cd $1/
 truffle init
-sed -i '1i const path = require("path");' truffle-config.js
-sed -i 's+module.exports = {+module.exports = {\n\tcontracts_build_directory: path.join(__dirname, "src/contracts"),+g' truffle-config.js
+npm i react-router-dom bootstrap @truffle/contract @truffle/hdwallet-provider web3 source-map-explorer react-transition-group identicon.js gh-pages
+git clone https://github.com/crenata/react-js-truffle-starter-kit.git
+cp -rf react-js-truffle-starter-kit/* .
+rm -rf react-js-truffle-starter-kit
+rm -rf src/logo.svg
+sed -i '2i "homepage": "https://localhost",' package.json
+sed -i 's+"scripts": {+"scripts": {\n"analyze": "source-map-explorer \x27build/static/js/*.js\x27",\n"predeploy": "npm run build",\n"deploy": "gh-pages -d build",\n"truffle-build": "truffle compile",\n"truffle-test": "truffle test",+g' package.json
