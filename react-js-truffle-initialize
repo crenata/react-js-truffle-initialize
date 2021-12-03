@@ -12,7 +12,7 @@ fi
 npx create-react-app $1
 cd $1/
 truffle init
-npm i react-router-dom bootstrap @truffle/contract @truffle/hdwallet-provider web3 source-map-explorer react-transition-group identicon.js gh-pages
+npm i react-router-dom bootstrap @truffle/contract @truffle/hdwallet-provider web3 dotenv source-map-explorer react-transition-group identicon.js gh-pages
 git clone https://github.com/crenata/react-js-truffle-starter-kit.git
 cp -rf react-js-truffle-starter-kit/* .
 rm -rf react-js-truffle-starter-kit
