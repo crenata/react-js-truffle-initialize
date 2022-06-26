@@ -3,7 +3,7 @@
 
 ```
 $ chmod +x react-js-truffle-initialize
-$ ./react-js-truffle-initialize <project_name>
+$ ./react-js-truffle-initialize -p <project_name>
 ```
 
 OR
@@ -11,5 +11,5 @@ OR
 ```
 $ chmod +x react-js-truffle-initialize
 $ mv react-js-truffle-initialize /usr/local/bin/
-$ react-js-truffle-initialize <project_name>
+$ react-js-truffle-initialize -p <project_name>
 ```
