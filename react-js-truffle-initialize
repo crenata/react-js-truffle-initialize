@@ -1,23 +1,55 @@
 #!/bin/sh
+while getopts p:n:d: flag
+do
+	case "${flag}" in
+		p) project=${OPTARG};;
+		n) name=${OPTARG};;
+		d) description=${OPTARG};;
+	esac
+done
+
+if [ -z "$project" ]; then
+	echo "Use -p for initialize project folder name";
+	exit 0;
+fi
+
 if ! [ -x "$(command -v node)" ]; then
 	apt update
 	apt install nodejs
 fi
+
 if ! [ -x "$(command -v truffle)" ]; then
 	npm i -g truffle
 fi
+
 if ! [ -x "$(command -v git)" ]; then
 	apt install git
 fi
-npx create-react-app $1
-cd $1/
+
+npx create-react-app $project
+
+cd $project/
+
 truffle init
 npm i react-router-dom bootstrap @truffle/contract @truffle/hdwallet-provider web3 dotenv source-map-explorer react-transition-group identicon.js gh-pages
+
 git clone https://github.com/crenata/react-js-truffle-starter-kit.git
+
 cp -rf react-js-truffle-starter-kit/. .
 cp -rf .env.example .env
 rm -rf react-js-truffle-starter-kit
 rm -rf src/logo.svg
 rm -rf .git
+
 sed -i '2i "homepage": "https://localhost",' package.json
 sed -i 's+"scripts": {+"scripts": {\n"analyze": "source-map-explorer \x27build/static/js/*.js\x27",\n"predeploy": "npm run build",\n"deploy": "gh-pages -d build",\n"truffle-build": "truffle compile",\n"truffle-test": "truffle test",+g' package.json
+
+if ! [ -z "$name" ]; then
+	sed -i "s+React App+$name+g" public/index.html
+	sed -i "s+\"React App\",+\"$name\",+g" public/manifest.json
+fi
+
+if ! [ -z "$description" ]; then
+	sed -i "s+Web site created using create-react-app+$description+g" public/index.html
+	sed -i "s+Create React App Sample+$description+g" public/manifest.json
+fi
