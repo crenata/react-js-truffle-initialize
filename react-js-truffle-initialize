@@ -32,6 +32,7 @@ cd $project/
 
 truffle init
 npm i react-router-dom bootstrap @truffle/contract @truffle/hdwallet-provider web3 dotenv source-map-explorer react-transition-group identicon.js gh-pages
+npm i --save-dev gulp gulp-csso gulp-uglify
 
 git clone https://github.com/crenata/react-js-truffle-starter-kit.git
 
@@ -42,7 +43,8 @@ rm -rf src/logo.svg
 rm -rf .git
 
 sed -i '2i "homepage": "https://localhost",' package.json
-sed -i 's+"scripts": {+"scripts": {\n"analyze": "source-map-explorer \x27build/static/js/*.js\x27",\n"predeploy": "npm run build",\n"deploy": "gh-pages -d build",\n"truffle-build": "truffle compile",\n"truffle-test": "truffle test",+g' package.json
+sed -i 's+"scripts": {+"scripts": {\n"analyze": "source-map-explorer \x27build/static/js/*.js\x27",\n"predeploy": "npm run build",\n"deploy": "gh-pages -d build",\n"truffle-build": "truffle compile",\n"truffle-test": "truffle test",\n"build-sw": "node ./src/sw-build.js",\n"css-minifier": "gulp css-minifier",\n"js-minifier": "gulp js-minifier",\n"minifier": "npm run css-minifier && npm run js-minifier",+g' package.json
+sed -i 's+react-scripts build+react-scripts build && npm run minifier && npm run build-sw+g' package.json
 
 if ! [ -z "$name" ]; then
 	sed -i "s+React App+$name+g" public/index.html
